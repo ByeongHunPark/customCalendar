@@ -13,6 +13,7 @@
 		143562C229A6E62A0047816E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 143562C029A6E62A0047816E /* Main.storyboard */; };
 		143562C429A6E62C0047816E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 143562C329A6E62C0047816E /* Assets.xcassets */; };
 		143562C729A6E62C0047816E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 143562C529A6E62C0047816E /* LaunchScreen.storyboard */; };
+		147D17F629A70665006B9936 /* hexColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 147D17F529A70665006B9936 /* hexColor.swift */; };
 		70E6D7B8F629661DBEB7187E /* Pods_bh_calendar.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 63433100F2A463B3561AAB20 /* Pods_bh_calendar.framework */; };
 /* End PBXBuildFile section */
 
@@ -26,6 +27,7 @@
 		143562C329A6E62C0047816E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		143562C629A6E62C0047816E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		143562C829A6E62C0047816E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		147D17F529A70665006B9936 /* hexColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = hexColor.swift; sourceTree = "<group>"; };
 		63433100F2A463B3561AAB20 /* Pods_bh_calendar.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_bh_calendar.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		BDF93F22249B8798E557262F /* Pods-bh_calendar.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-bh_calendar.release.xcconfig"; path = "Target Support Files/Pods-bh_calendar/Pods-bh_calendar.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -67,6 +69,7 @@
 				143562BC29A6E62A0047816E /* SceneDelegate.swift */,
 				143562BE29A6E62A0047816E /* ViewController.swift */,
 				143562C029A6E62A0047816E /* Main.storyboard */,
+				147D17F529A70665006B9936 /* hexColor.swift */,
 				143562C329A6E62C0047816E /* Assets.xcassets */,
 				143562C529A6E62C0047816E /* LaunchScreen.storyboard */,
 				143562C829A6E62C0047816E /* Info.plist */,
@@ -207,6 +210,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				143562BF29A6E62A0047816E /* ViewController.swift in Sources */,
+				147D17F629A70665006B9936 /* hexColor.swift in Sources */,
 				143562BB29A6E62A0047816E /* AppDelegate.swift in Sources */,
 				143562BD29A6E62A0047816E /* SceneDelegate.swift in Sources */,
 			);

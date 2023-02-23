@@ -12,10 +12,13 @@ class ViewController: UIViewController{
     
     @IBOutlet weak var calendarView: FSCalendar!
     @IBOutlet weak var labelTest: UILabel!
+    @IBOutlet weak var headerTest: UILabel!
     
     var events : [Date] = []
     
     let dateFormatter = DateFormatter()
+    let hd = DateFormatter()
+    let tcd = DateFormatter()
     let today = Date()
     
     override func viewDidLoad() {
@@ -27,7 +30,7 @@ class ViewController: UIViewController{
         
         todayLabelUI()
         calendarUI()
-        
+        headerSet()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -37,6 +40,10 @@ class ViewController: UIViewController{
     fileprivate func dateFormatterSet(){
         dateFormatter.locale = Locale(identifier: "ko_KR")
         dateFormatter.dateFormat = "yyyy-MM-dd"
+        hd.locale = Locale(identifier: "ko_KR")
+        hd.dateFormat = "MM월\nyyyy년"
+        tcd.locale = Locale(identifier: "ko_KR")
+        tcd.dateFormat = "MM월"
     }
     
     fileprivate func todayLabelUI(){
@@ -90,6 +97,7 @@ class ViewController: UIViewController{
         calendarView.appearance.titleFont = UIFont(name: "NotoSansKR-Regular", size: 14)
         
         // MARK: - 헤더설정(ex:2023년 1월)
+        
         // 헤더의 날짜 포맷 설정
         calendarView.appearance.headerDateFormat = "YYYY년 MM월"
 
@@ -99,37 +107,58 @@ class ViewController: UIViewController{
         // 헤더의 폰트 정렬 설정
         // .center & .left & .justified & .natural & .right
         calendarView.appearance.headerTitleAlignment = .center
-
+        
         // 헤더 높이 설정
-        calendarView.headerHeight = 45
+        calendarView.headerHeight = 60
 
         // 헤더 양 옆(전달 & 다음 달) 글씨 투명도
         // 0.0 = 안보이게 됩니다.
         calendarView.appearance.headerMinimumDissolvedAlpha = 0.5
         
+        // MARK: - 배경 테두리
+//        calendarView.layer.borderWidth = 1
+//        calendarView.layer.borderColor = UIColor.black.cgColor
+//        calendarView.layer.cornerRadius = 15
+        
         // MARK: - 색상 설정
         // 배경색
-        calendarView.backgroundColor = UIColor(red: 241/255, green: 249/255, blue: 255/255, alpha: 1)
+        calendarView.backgroundColor = .clear
+//        UIColor(red: 241/255, green: 249/255, blue: 255/255, alpha: 1)
         
-        // 선택한 날짜색
-        calendarView.appearance.selectionColor = UIColor(red: 38/255, green: 153/255, blue: 251/255, alpha: 1)
+        // 선택한 날짜 배경색
+        calendarView.appearance.selectionColor = UIColor(hex: "ffed99")
+//        UIColor(red: 38/255, green: 153/255, blue: 251/255, alpha: 1)
         
-        // 오늘 날짜색
-        calendarView.appearance.todayColor = UIColor(red: 188/255, green: 224/255, blue: 253/255, alpha: 1)
+        // 오늘 날짜 배경색
+        calendarView.appearance.todayColor = UIColor(red: 255/255, green: 237/255, blue: 153/255, alpha: 0.4) // UIColor(hex: "ffed99") 의 알파조절한 것
+//        UIColor(red: 188/255, green: 224/255, blue: 253/255, alpha: 1)
         
         // 이벤트 표시 색상(날짜 아래 점으로 표시)
-        calendarView.appearance.eventDefaultColor = UIColor.green
-        calendarView.appearance.eventSelectionColor = UIColor.green
+        // 선택 X
+        calendarView.appearance.eventDefaultColor = UIColor(hex: "b59b8a")
+        // 선택 O
+        calendarView.appearance.eventSelectionColor = UIColor(hex: "b59b8a")
         
+        // 텍스트 색상 설정
+        // 평일
+        calendarView.appearance.titleDefaultColor = .black
+        // 주말
+//        calendarView.appearance.titleWeekendColor = .red
+        // 선택 O
+        calendarView.appearance.titleSelectionColor = .black
+        // 오늘 날짜 선택시 배경색
+//        calendarView.appearance.todaySelectionColor = .black
+        // 오늘 날짜 텍스트 색
+        calendarView.appearance.titleTodayColor = .black
         
-        // MARK: - 기타 설정
+        // 달에 유효하지 않은 날짜의 색 지정
+//        calendarView.appearance.titlePlaceholderColor = UIColor.white.withAlphaComponent(0.2)
+        
+        // MARK: - 선택 모서리
         // 선택된 날짜 모서리 설정 (0으로 하면 사각형으로 표시)
 //        calendarView.appearance.borderRadius = 0
-
-        // 평일 & 주말 색상 설정
-        calendarView.appearance.titleDefaultColor = .black  // 평일
-//        calendarView.appearance.titleWeekendColor = .red    // 주말
         
+        // MARK: - 다중 선택
         // 다중 선택
         calendarView.allowsMultipleSelection = false
 
@@ -140,7 +169,6 @@ class ViewController: UIViewController{
     // MARK: - 날짜에 이벤트 추가하는 함수
     func setEvents() {
         
-        
         // events
         let myFirstEvent = dateFormatter.date(from: "2023-02-01")
         let mySecondEvent = dateFormatter.date(from: "2023-02-13")
@@ -149,6 +177,16 @@ class ViewController: UIViewController{
         
     }
     
+    func headerSet(){
+        
+        headerTest.text = hd.string(from: calendarView.currentPage)
+        headerTest.font = UIFont.boldSystemFont(ofSize: 10)
+        if let text = headerTest.text{
+            let range = (text as NSString).range(of: tcd.string(from: calendarView.currentPage))
+            myLabelAdjustFont(text, size: 20, range: range, label: headerTest)
+            myLabelChangeColor(text, color: UIColor.brown, range: range, label: headerTest)
+        }
+    }
 }
 
 
@@ -220,30 +258,109 @@ extension ViewController : FSCalendarDelegate, FSCalendarDataSource, FSCalendarD
 //         }
 //    }
     
-    // MARK: - 날짜별로 선택시 색상을 설정하는 메소드
-    func calendar(_ calendar: FSCalendar, appearance: FSCalendarAppearance, fillSelectionColorFor date: Date) -> UIColor? {
-         switch dateFormatter.string(from: date) {
-         case "2023-01-05":
-             return .green
-             
-         case "2023-01-06":
-             return .yellow
-             
-         case "2023-01-07":
-             return .red
-             
-        default:
-             return appearance.selectionColor
-         }
-    }
+    // MARK: - 날짜별로 선택시 배경색상을 설정하는 메소드
+//    func calendar(_ calendar: FSCalendar, appearance: FSCalendarAppearance, fillSelectionColorFor date: Date) -> UIColor? {
+//         switch dateFormatter.string(from: date) {
+//         case "2023-01-05":
+//             return .green
+//
+//         case "2023-01-06":
+//             return .yellow
+//
+//         case "2023-01-07":
+//             return .red
+//
+//        default:
+//             return appearance.selectionColor
+//         }
+//    }
+    
+    // MARK: - title(날짜)의 디폴트 색상
+//    func calendar(_ calendar: FSCalendar, appearance: FSCalendarAppearance, titleDefaultColorFor date: Date) -> UIColor? {
+//        return UIColor.white.withAlphaComponent(0.5)
+//    }
+        
+    // MARK: - subtitle(이벤트)의 디폴트 색상
+//    func calendar(_ calendar: FSCalendar, appearance: FSCalendarAppearance, subtitleDefaultColorFor date: Date) -> UIColor? {
+//        return UIColor.white.withAlphaComponent(0.5)
+//    }
     
     // MARK: - 최대 선택 갯수를 제어하는 메소드
     func calendar(_ calendar: FSCalendar, shouldSelect date: Date, at monthPosition: FSCalendarMonthPosition) -> Bool {
-         // 날짜 3개까지만 선택
-         if calendar.selectedDates.count > 3 {
+         // 날짜 n개까지만 선택
+         if calendar.selectedDates.count > 3/*n*/ {
              return false
          } else {
              return true
          }
+    }
+    
+    func calendarCurrentPageDidChange(_ calendar: FSCalendar) {
+        headerSet()
+    }
+}
+
+extension ViewController{
+    // 라벨 특정부분만 폰트/사이즈 변경
+    func myLabelAdjustFont(_ text:String, size : CGFloat, range : NSRange, label: UILabel){
+        
+        // 폰트와 폰트 사이즈를 둘 다 변경
+        let font = UIFont(name:"Apple Color Emoji" , size: 50)
+        
+        // 폰트 사이즈만 변경
+        let fontSize = UIFont.boldSystemFont(ofSize: size)
+        
+        //label에 있는 Text를 NSMutableAttributedString으로 만들어준다.
+        let attributedStr = NSMutableAttributedString(string: text)
+        
+        // 위에서 만든 attributedStr에 addAttribute메소드를 통해 Attribute를 적용
+        // value = font / fontSize
+        attributedStr.addAttribute(.font , value: fontSize, range: range)
+        
+        // label에 속성을 적용
+        label.attributedText = attributedStr
+        label.sizeToFit()
+        
+    }
+    
+    // 라벨 특정 부분 색 변경
+    func myLabelChangeColor(_ text:String, color: UIColor , range :NSRange, label: UILabel){
+        let attributedString = NSMutableAttributedString(string: text)
+        attributedString.addAttribute(.foregroundColor, value: color, range: range)
+        label.attributedText = attributedString
+    }
+    
+    //Stoke지정 메소드
+    func myLabelChangeStroke(_ text:String, range :NSRange){
+        let attributedString = NSMutableAttributedString(string: text)
+        attributedString.addAttribute(.strokeWidth, value:4.0, range: range)
+        attributedString.addAttribute(.strokeColor, value: UIColor.blue, range: range)
+        
+    }
+    
+    //밑줄 그어주는 메소드
+    func myLabelApplyUnderline(_ text:String, range :NSRange){
+        let attributedString = NSMutableAttributedString(string: text)
+        attributedString.addAttribute(.underlineStyle, value: NSUnderlineStyle.thick.rawValue, range: range)
+        attributedString.addAttribute(.underlineColor, value: UIColor.blue, range: range)
+        
+    }
+    
+    
+    //배경 지정 메소드
+    func myLabelChangeBackgroundColor(_ text:String, range :NSRange){
+        let attributedString = NSMutableAttributedString(string: text)
+        attributedString.addAttribute(.backgroundColor, value: UIColor.blue, range: range)
+        
+    }
+    
+    //Strike지정 메소드 - 텍스트 가운데 줄
+    func myLabelApplyStrike(_ text:String, range :NSRange){
+        let attributedString = NSMutableAttributedString(string: text)
+        // 아래에서 위로 뛰우는 정도
+        attributedString.addAttribute(.baselineOffset, value: 0, range: range)
+        // 줄 굵기
+        attributedString.addAttribute(.strikethroughStyle, value: 1, range:range)
+        
     }
 }
