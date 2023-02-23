@@ -13,7 +13,6 @@ class ViewController: UIViewController{
     @IBOutlet weak var calendarView: FSCalendar!
     @IBOutlet weak var labelTest: UILabel!
     
-    
     var events : [Date] = []
     
     let dateFormatter = DateFormatter()
