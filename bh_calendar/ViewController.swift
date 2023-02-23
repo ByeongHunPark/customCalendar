@@ -14,17 +14,49 @@ class ViewController: UIViewController{
     @IBOutlet weak var labelTest: UILabel!
     @IBOutlet weak var headerTest: UILabel!
     
+    @IBOutlet weak var prevBtn: UIButton!
+    @IBOutlet weak var nextBtn: UIButton!
+    
     var events : [Date] = []
     
-    let dateFormatter = DateFormatter()
-    let hd = DateFormatter()
-    let tcd = DateFormatter()
-    let today = Date()
+    private var currentPage: Date?
+    
+    private lazy var today: Date = {
+        return Date()
+    }()
+    
+    @IBAction func prevBtnClick(_ sender: Any) {
+        scrollCurrentPage(isPrev: true)
+    }
+    
+    @IBAction func nextBtnClick(_ sender: Any) {
+        scrollCurrentPage(isPrev: false)
+    }
+    
+    private lazy var dateFormatter : DateFormatter = {
+        let df = DateFormatter()
+        df.locale = Locale(identifier: "ko_KR")
+        df.dateFormat = "yyyy-MM-dd"
+        return df
+    }()
+    
+    private lazy var hd: DateFormatter = {
+        let df = DateFormatter()
+        df.locale = Locale(identifier: "ko_KR")
+        df.dateFormat = "MM월\nyyyy년"
+        return df
+    }()
+    
+    private lazy var tcd : DateFormatter = {
+        let df = DateFormatter()
+        df.locale = Locale(identifier: "ko_KR")
+        df.dateFormat = "MM월"
+        return df
+    }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        dateFormatterSet()
         calendarView.delegate = self
         calendarView.dataSource = self
         
@@ -34,17 +66,13 @@ class ViewController: UIViewController{
     }
     
     override func viewWillAppear(_ animated: Bool) {
+        prevBtn.setTitle("", for: .normal)
+        nextBtn.setTitle("", for: .normal)
         setEvents()
     }
     
-    fileprivate func dateFormatterSet(){
-        dateFormatter.locale = Locale(identifier: "ko_KR")
-        dateFormatter.dateFormat = "yyyy-MM-dd"
-        hd.locale = Locale(identifier: "ko_KR")
-        hd.dateFormat = "MM월\nyyyy년"
-        tcd.locale = Locale(identifier: "ko_KR")
-        tcd.dateFormat = "MM월"
-    }
+    
+    
     
     fileprivate func todayLabelUI(){
         let todayEventCheck = dateFormatter.string(from: today)
@@ -177,14 +205,23 @@ class ViewController: UIViewController{
         
     }
     
-    func headerSet(){
+    private func scrollCurrentPage(isPrev: Bool) {
+        let cal = Calendar.current
+        var dateComponents = DateComponents()
+        dateComponents.month = isPrev ? -1 : 1
         
+        self.currentPage = cal.date(byAdding: dateComponents, to: self.currentPage ?? self.today)
+        self.calendarView.setCurrentPage(self.currentPage!, animated: true)
+    }
+    
+    func headerSet(){
         headerTest.text = hd.string(from: calendarView.currentPage)
         headerTest.font = UIFont.boldSystemFont(ofSize: 10)
         if let text = headerTest.text{
             let range = (text as NSString).range(of: tcd.string(from: calendarView.currentPage))
-            myLabelAdjustFont(text, size: 20, range: range, label: headerTest)
-            myLabelChangeColor(text, color: UIColor.brown, range: range, label: headerTest)
+            
+            myLabelAdjustFont(text, size: 20, color: UIColor.brown , range: range, label: headerTest)
+            
         }
     }
 }
@@ -224,6 +261,8 @@ extension ViewController : FSCalendarDelegate, FSCalendarDataSource, FSCalendarD
 //         return false  // 선택해제 불가능
          return true   // 선택해제 가능
     }
+    
+    
     
     // MARK: - 날짜 밑에 문자열 표시 메소드
     // 이벤트 표시 대신 글짜를 표시
@@ -296,13 +335,14 @@ extension ViewController : FSCalendarDelegate, FSCalendarDataSource, FSCalendarD
     }
     
     func calendarCurrentPageDidChange(_ calendar: FSCalendar) {
+        self.currentPage = calendar.currentPage
         headerSet()
     }
 }
 
 extension ViewController{
     // 라벨 특정부분만 폰트/사이즈 변경
-    func myLabelAdjustFont(_ text:String, size : CGFloat, range : NSRange, label: UILabel){
+    func myLabelAdjustFont(_ text:String, size : CGFloat, color: UIColor, range : NSRange, label: UILabel){
         
         // 폰트와 폰트 사이즈를 둘 다 변경
         let font = UIFont(name:"Apple Color Emoji" , size: 50)
@@ -316,6 +356,7 @@ extension ViewController{
         // 위에서 만든 attributedStr에 addAttribute메소드를 통해 Attribute를 적용
         // value = font / fontSize
         attributedStr.addAttribute(.font , value: fontSize, range: range)
+        attributedStr.addAttribute(.foregroundColor, value: color, range: range)
         
         // label에 속성을 적용
         label.attributedText = attributedStr
@@ -324,10 +365,9 @@ extension ViewController{
     }
     
     // 라벨 특정 부분 색 변경
-    func myLabelChangeColor(_ text:String, color: UIColor , range :NSRange, label: UILabel){
+    func myLabelChangeColor(_ text:String, color: UIColor , range :NSRange){
         let attributedString = NSMutableAttributedString(string: text)
         attributedString.addAttribute(.foregroundColor, value: color, range: range)
-        label.attributedText = attributedString
     }
     
     //Stoke지정 메소드

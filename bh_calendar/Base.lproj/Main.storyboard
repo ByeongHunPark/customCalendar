@@ -27,25 +27,52 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kzT-Bc-Uds">
+                            <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xN2-nT-i8r">
                                 <rect key="frame" x="16" y="375" width="361" height="75"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dez-gv-N71">
+                                        <rect key="frame" x="0.0" y="0.0" width="30" height="75"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="30" id="7CH-O1-hws"/>
+                                        </constraints>
+                                        <state key="normal" title="Button"/>
+                                        <buttonConfiguration key="configuration" style="plain" image="arrow.left" catalog="system"/>
+                                        <connections>
+                                            <action selector="prevBtnClick:" destination="BYZ-38-t0r" eventType="touchUpInside" id="IfX-Es-Geu"/>
+                                        </connections>
+                                    </button>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kzT-Bc-Uds">
+                                        <rect key="frame" x="30" y="0.0" width="301" height="75"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="erz-DL-TWv">
+                                        <rect key="frame" x="331" y="0.0" width="30" height="75"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="30" id="Y3l-o2-KN5"/>
+                                        </constraints>
+                                        <state key="normal" title="Button"/>
+                                        <buttonConfiguration key="configuration" style="plain" image="arrow.right" catalog="system"/>
+                                        <connections>
+                                            <action selector="nextBtnClick:" destination="BYZ-38-t0r" eventType="touchUpInside" id="M72-6G-9gE"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                            </stackView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" red="0.93333333333333335" green="0.81176470588235294" blue="0.73333333333333328" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
-                            <constraint firstItem="kzT-Bc-Uds" firstAttribute="top" secondItem="hzs-FX-C3x" secondAttribute="bottom" constant="8" id="1mR-KV-mhv"/>
                             <constraint firstItem="hzs-FX-C3x" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="16" id="DNu-WN-VwX"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="elS-Em-mFe" secondAttribute="bottom" constant="11" id="Da7-Jm-JbT"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="elS-Em-mFe" secondAttribute="trailing" constant="16" id="Ddc-QD-O2Y"/>
+                            <constraint firstItem="xN2-nT-i8r" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="16" id="F8Q-yX-1rj"/>
+                            <constraint firstItem="elS-Em-mFe" firstAttribute="top" secondItem="xN2-nT-i8r" secondAttribute="bottom" constant="33" id="M4m-dP-P9J"/>
                             <constraint firstItem="elS-Em-mFe" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="16" id="Ybc-R2-Znf"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="xN2-nT-i8r" secondAttribute="trailing" constant="16" id="Z6V-1o-KLC"/>
+                            <constraint firstItem="xN2-nT-i8r" firstAttribute="top" secondItem="hzs-FX-C3x" secondAttribute="bottom" constant="8" id="d8F-X6-UqC"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="hzs-FX-C3x" secondAttribute="trailing" constant="16" id="eC6-R8-HY6"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="kzT-Bc-Uds" secondAttribute="trailing" constant="16" id="hvy-le-BHt"/>
-                            <constraint firstItem="elS-Em-mFe" firstAttribute="top" secondItem="kzT-Bc-Uds" secondAttribute="bottom" constant="33" id="i6w-ac-uPT"/>
-                            <constraint firstItem="kzT-Bc-Uds" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="16" id="vAv-ba-8OK"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="hzs-FX-C3x" secondAttribute="bottom" constant="451" id="vQa-A9-u7d"/>
                             <constraint firstItem="elS-Em-mFe" firstAttribute="top" secondItem="hzs-FX-C3x" secondAttribute="bottom" constant="116" id="yxa-t2-6ef"/>
                             <constraint firstItem="hzs-FX-C3x" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="z7q-uu-DtF"/>
@@ -55,6 +82,8 @@
                         <outlet property="calendarView" destination="hzs-FX-C3x" id="dJE-hR-Udm"/>
                         <outlet property="headerTest" destination="kzT-Bc-Uds" id="b3b-yw-hdu"/>
                         <outlet property="labelTest" destination="elS-Em-mFe" id="Ei3-cQ-MK1"/>
+                        <outlet property="nextBtn" destination="erz-DL-TWv" id="0Vm-Nb-G62"/>
+                        <outlet property="prevBtn" destination="dez-gv-N71" id="j45-ai-f49"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
@@ -63,6 +92,8 @@
         </scene>
     </scenes>
     <resources>
+        <image name="arrow.left" catalog="system" width="128" height="95"/>
+        <image name="arrow.right" catalog="system" width="128" height="95"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
