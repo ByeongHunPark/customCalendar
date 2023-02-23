@@ -33,6 +33,11 @@ class ViewController: UIViewController{
         scrollCurrentPage(isPrev: false)
     }
     
+    // MARK: - 오늘 날짜로 돌아오는 버튼
+//    @IBAction func currentBtnClicked(_ sender: Any) {
+//        self.calendarView.select(Date.Today())
+//    }
+    
     private lazy var dateFormatter : DateFormatter = {
         let df = DateFormatter()
         df.locale = Locale(identifier: "ko_KR")
@@ -205,6 +210,7 @@ class ViewController: UIViewController{
         
     }
     
+    // MARK: - 버튼으로 페이지 이동
     private func scrollCurrentPage(isPrev: Bool) {
         let cal = Calendar.current
         var dateComponents = DateComponents()
@@ -214,14 +220,13 @@ class ViewController: UIViewController{
         self.calendarView.setCurrentPage(self.currentPage!, animated: true)
     }
     
+    // MARK: - custom header
     func headerSet(){
         headerTest.text = hd.string(from: calendarView.currentPage)
         headerTest.font = UIFont.boldSystemFont(ofSize: 10)
         if let text = headerTest.text{
             let range = (text as NSString).range(of: tcd.string(from: calendarView.currentPage))
-            
             myLabelAdjustFont(text, size: 20, color: UIColor.brown , range: range, label: headerTest)
-            
         }
     }
 }
@@ -334,6 +339,7 @@ extension ViewController : FSCalendarDelegate, FSCalendarDataSource, FSCalendarD
          }
     }
     
+    // MARK: - 페이징 처리
     func calendarCurrentPageDidChange(_ calendar: FSCalendar) {
         self.currentPage = calendar.currentPage
         headerSet()
