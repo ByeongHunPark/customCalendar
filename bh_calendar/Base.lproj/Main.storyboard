@@ -80,7 +80,7 @@
                     </view>
                     <connections>
                         <outlet property="calendarView" destination="hzs-FX-C3x" id="dJE-hR-Udm"/>
-                        <outlet property="headerTest" destination="kzT-Bc-Uds" id="b3b-yw-hdu"/>
+                        <outlet property="headerTest" destination="kzT-Bc-Uds" id="QKz-Qq-4TY"/>
                         <outlet property="labelTest" destination="elS-Em-mFe" id="Ei3-cQ-MK1"/>
                         <outlet property="nextBtn" destination="erz-DL-TWv" id="0Vm-Nb-G62"/>
                         <outlet property="prevBtn" destination="dez-gv-N71" id="j45-ai-f49"/>

@@ -17,7 +17,7 @@ class ViewController: UIViewController{
     @IBOutlet weak var prevBtn: UIButton!
     @IBOutlet weak var nextBtn: UIButton!
     
-    var events : [Date] = []
+    var events : [String] = []
     
     private var currentPage: Date?
     
@@ -34,9 +34,9 @@ class ViewController: UIViewController{
     }
     
     // MARK: - 오늘 날짜로 돌아오는 버튼
-//    @IBAction func currentBtnClicked(_ sender: Any) {
-//        self.calendarView.select(Date.Today())
-//    }
+    @IBAction func currentBtnClicked(_ sender: Any) {
+        todayLabelUI()
+    }
     
     private lazy var dateFormatter : DateFormatter = {
         let df = DateFormatter()
@@ -65,6 +65,8 @@ class ViewController: UIViewController{
         calendarView.delegate = self
         calendarView.dataSource = self
         
+        setEvents()
+        
         todayLabelUI()
         calendarUI()
         headerSet()
@@ -73,20 +75,18 @@ class ViewController: UIViewController{
     override func viewWillAppear(_ animated: Bool) {
         prevBtn.setTitle("", for: .normal)
         nextBtn.setTitle("", for: .normal)
-        setEvents()
+        
+        let headerClick = UITapGestureRecognizer(target: self, action: #selector(currentBtnClicked))
+        headerTest.isUserInteractionEnabled = true
+        headerTest.addGestureRecognizer(headerClick)
+        
     }
     
-    
-    
-    
     fileprivate func todayLabelUI(){
-        let todayEventCheck = dateFormatter.string(from: today)
+        self.calendarView.select(today)
+        currentPage = calendarView.currentPage
         
-        if events.contains(dateFormatter.date(from: todayEventCheck)!){
-            labelTest.text = "이벤트가 있습니다"
-        }else{
-            labelTest.text = "이벤트가 없습니다"
-        }
+        eventCheck(date: today)
     }
     
     fileprivate func calendarUI(){
@@ -203,10 +203,11 @@ class ViewController: UIViewController{
     func setEvents() {
         
         // events
-        let myFirstEvent = dateFormatter.date(from: "2023-02-01")
-        let mySecondEvent = dateFormatter.date(from: "2023-02-13")
+        let myFirstEvent = "2023-02-01"
+        let mySecondEvent = "2023-02-13"
+        let mythirdEvent = dateFormatter.string(from: today)
         
-        events = [myFirstEvent!, mySecondEvent!]
+        events = [myFirstEvent, mySecondEvent , mythirdEvent]
         
     }
     
@@ -229,6 +230,28 @@ class ViewController: UIViewController{
             myLabelAdjustFont(text, size: 20, color: UIColor.brown , range: range, label: headerTest)
         }
     }
+    
+    func eventCheck(date: Date){
+        print(dateFormatter.string(from: date) + " 날짜가 선택되었습니다.")
+        
+        let check = dateFormatter.string(from: date)
+        print(check)
+        if events.contains(check){
+            print("있음")
+            labelTest.text = "이벤트가 있습니다"
+        }else{
+            print("없음")
+            labelTest.text = "이벤트가 없습니다"
+        }
+    }
+    
+    func dateFormatterChange(date: Date) -> Date{
+        let dateToStr = dateFormatter.string(from: date)
+        let check = dateFormatter.date(from: dateToStr)
+                
+        return check!
+    }
+    
 }
 
 
@@ -237,7 +260,9 @@ extension ViewController : FSCalendarDelegate, FSCalendarDataSource, FSCalendarD
     
     // MARK: - 이벤트 표시 갯수 설정
     func calendar(_ calendar: FSCalendar, numberOfEventsFor date: Date) -> Int {
-        if self.events.contains(date) {
+        let check = dateFormatter.string(from: date)
+        
+        if self.events.contains(check) {
             return 1
         } else {
             return 0
@@ -246,13 +271,8 @@ extension ViewController : FSCalendarDelegate, FSCalendarDataSource, FSCalendarD
     
     // MARK: - 날짜 선택 시 콜백 메소드
     func calendar(_ calendar: FSCalendar, didSelect date: Date, at monthPosition: FSCalendarMonthPosition) {
-        print(dateFormatter.string(from: date) + " 날짜가 선택되었습니다.")
         
-        if events.contains(date){
-            labelTest.text = "이벤트가 있습니다"
-        }else{
-            labelTest.text = "이벤트가 없습니다"
-        }
+        eventCheck(date: date)
         
     }
     
