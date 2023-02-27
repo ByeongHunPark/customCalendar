@@ -227,7 +227,7 @@ class ViewController: UIViewController{
         headerTest.font = UIFont.boldSystemFont(ofSize: 10)
         if let text = headerTest.text{
             let range = (text as NSString).range(of: tcd.string(from: calendarView.currentPage))
-            myLabelAdjustFont(text, size: 20, color: UIColor.brown , range: range, label: headerTest)
+            myLabelAdjustFont(text, size: 20, color: UIColor.black , range: range, label: headerTest)
         }
     }
     
@@ -371,7 +371,7 @@ extension ViewController{
     func myLabelAdjustFont(_ text:String, size : CGFloat, color: UIColor, range : NSRange, label: UILabel){
         
         // 폰트와 폰트 사이즈를 둘 다 변경
-        let font = UIFont(name:"Apple Color Emoji" , size: 50)
+//        let font = UIFont(name:"Apple Color Emoji" , size: 50)
         
         // 폰트 사이즈만 변경
         let fontSize = UIFont.boldSystemFont(ofSize: size)
