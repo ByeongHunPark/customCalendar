@@ -364,6 +364,17 @@ extension ViewController : FSCalendarDelegate, FSCalendarDataSource, FSCalendarD
         self.currentPage = calendar.currentPage
         headerSet()
     }
+    
+    // MARK: - 특정 날짜에 이미지 세팅
+//    func calendar(_ calendar: FSCalendar, imageFor date: Date) -> UIImage? {
+//        let imageDateFormatter = DateFormatter()
+//        imageDateFormatter.dateFormat = "yyyyMMdd"
+//        var dateStr = imageDateFormatter.string(from: date)
+//        print("date : \(dateStr)")
+//        return events.contains(dateStr) ? UIImage(named: "icon_cat") : nil
+//    }
+    
+    
 }
 
 extension ViewController{
